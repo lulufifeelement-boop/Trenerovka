@@ -25,9 +25,7 @@
    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
    let html=await new Response(stream).text();
    if(!/<!doctype html>/i.test(html)||!html.includes('my-workouts-db'))throw new Error('Проверка загруженного приложения не пройдена.');
-   html=html.replace(/<head([^>]*)>/i,'const html=await new Response(stream).text();
-   if(!/<!doctype html>/i.test(html)||!html.includes('my-workouts-db'))throw new Error('Проверка загруженного приложения не пройдена.');
-   document.open();document.write(html);document.close();\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><meta name="theme-color" content="#16866b">');
+   html=html.replace(/<head([^>]*)>/i,'<head$1>\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><meta name="theme-color" content="#16866b">');
    document.open();document.write(html);document.close();
  }
  try{await load()}catch(e){msg.textContent='Не удалось загрузить приложение. Проверьте подключение к интернету и откройте страницу снова. '+(e?.message||'');spin.hidden=true;retry.hidden=false;}
