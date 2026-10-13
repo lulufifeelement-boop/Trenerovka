@@ -25,26 +25,27 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Verify bundled application
+        shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
           import base64, gzip, hashlib
           names = [
-            "payload/part-00.txt",
-  "payload/part-01.txt",
-  "payload/part-02.txt",
-  "payload/part-03.txt",
-  "payload/part-04.txt",
-  "payload/part-05.txt",
-  "payload/part-06.txt",
-  "payload/part-07.txt",
-  "payload/part-08.txt",
-  "payload/part-09.txt",
-            "payload/part-10a.txt",
-            "payload/part-10b.txt",
-            "payload/part-11.txt",
-            "payload/part-12.txt",
-            "payload/part-13.txt",
+              "payload/part-00.txt",
+              "payload/part-01.txt",
+              "payload/part-02.txt",
+              "payload/part-03.txt",
+              "payload/part-04.txt",
+              "payload/part-05.txt",
+              "payload/part-06.txt",
+              "payload/part-07.txt",
+              "payload/part-08.txt",
+              "payload/part-09.txt",
+              "payload/part-10a.txt",
+              "payload/part-10b.txt",
+              "payload/part-11.txt",
+              "payload/part-12.txt",
+              "payload/part-13.txt",
           ]
           encoded = "".join(Path(name).read_text().strip() for name in names)
           data = gzip.decompress(base64.b64decode(encoded, validate=True))
