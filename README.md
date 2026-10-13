@@ -4,7 +4,7 @@
 
 ## Запуск
 
-- Откройте `index.html` в браузере или опубликуйте репозиторий через GitHub Pages (Settings → Pages → Deploy from a branch → main / root).
+- Откройте `index.html` в браузере или опубликуйте репозиторий через GitHub Pages (Settings → Pages → Deploy from a branch → main / root). В репозитории есть PWA-манифест, иконка и Service Worker.
 - На телефоне Android откройте опубликованный сайт в Chrome.
 - После первой загрузки откройте приложение ещё раз при подключении к интернету, чтобы браузер закэшировал данные для офлайн-запуска.
 
