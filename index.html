@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f4f6f8"><title>Мои тренировки</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#16866b"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><title>Мои тренировки</title>
 <style>
 :root{color-scheme:light dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f6f8;color:#1f2937}.card{max-width:440px;margin:20px;padding:28px;border-radius:22px;background:#fff;box-shadow:0 8px 32px #1f293710;text-align:center}h1{font-size:24px}p{color:#64748b;line-height:1.5}.spin{width:26px;height:26px;border:3px solid #dce8e4;border-top-color:#16a085;border-radius:50%;animation:s .8s linear infinite;margin:18px auto}@keyframes s{to{transform:rotate(360deg)}}button{background:#16a085;color:white;border:0;border-radius:12px;padding:12px 18px;font-weight:700}
 </style></head><body><main class="card"><h1>Мои тренировки</h1><p id="msg">Загружаю приложение и 23 векторные схемы…</p><div class="spin" id="spin"></div><button id="retry" hidden>Повторить загрузку</button></main>
 <script>
 (async()=>{
+ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
  const KEY='my-workouts-html-gzip-base64-v1.1.0';
  const parts=["./payload/part-00.txt","./payload/part-01.txt","./payload/part-02.txt","./payload/part-03.txt","./payload/part-04.txt","./payload/part-05.txt","./payload/part-06.txt","./payload/part-07.txt","./payload/part-08.txt","./payload/part-09.txt","./payload/part-10a.txt","./payload/part-10b.txt","./payload/part-11.txt","./payload/part-12.txt","./payload/part-13.txt"];
  const msg=document.getElementById('msg'),spin=document.getElementById('spin'),retry=document.getElementById('retry');
@@ -22,8 +23,11 @@
    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
    if(!('DecompressionStream' in window))throw new Error('Нужен актуальный Chrome с поддержкой распаковки gzip.');
    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-   const html=await new Response(stream).text();
+   let html=await new Response(stream).text();
    if(!/<!doctype html>/i.test(html)||!html.includes('my-workouts-db'))throw new Error('Проверка загруженного приложения не пройдена.');
+   html=html.replace(/<head([^>]*)>/i,'const html=await new Response(stream).text();
+   if(!/<!doctype html>/i.test(html)||!html.includes('my-workouts-db'))throw new Error('Проверка загруженного приложения не пройдена.');
+   document.open();document.write(html);document.close();\n<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><meta name="theme-color" content="#16866b">');
    document.open();document.write(html);document.close();
  }
  try{await load()}catch(e){msg.textContent='Не удалось загрузить приложение. Проверьте подключение к интернету и откройте страницу снова. '+(e?.message||'');spin.hidden=true;retry.hidden=false;}
