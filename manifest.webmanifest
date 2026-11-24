@@ -1,19 +1,17 @@
 {
-  "name": "Мои тренировки",
-  "short_name": "Тренировки",
+  "id": "./",
+  "name": "Форма — тренировочный план",
+  "short_name": "Форма",
+  "description": "Тренировки A/B, таймер отдыха и дневник прогресса. Работает без интернета.",
   "lang": "ru",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#f4f6f8",
-  "theme_color": "#16866b",
+  "orientation": "portrait",
+  "background_color": "#0a1014",
+  "theme_color": "#0a1014",
+  "categories": ["health", "fitness", "sports"],
   "icons": [
-    {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }
